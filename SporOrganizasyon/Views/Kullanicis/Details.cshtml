@@ -1,0 +1,90 @@
+﻿@model SporOrganizasyon.Models.Kullanici
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Kullanici</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Soyad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Soyad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sifre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sifre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ilce)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ilce)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DogumTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DogumTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cinsiyet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cinsiyet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isLogin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isLogin)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Kid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

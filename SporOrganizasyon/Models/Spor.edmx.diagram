@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="069bc156eaaa424ca54211ded6443faa" Name="Diagram1">
+        <EntityTypeShape EntityType="SporOModel.Etkinlik" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.EtkinlikTipi" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.HataLoglari" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.Ilceler" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.Iller" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.Kullanici" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.Mekan" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.Sporlar" Width="1.5" PointX="7.5" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SporOModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="SporOModel.FK_Etkinlik_EtkinlikTipi" ManuallyRouted="false" />
+        <AssociationConnector Association="SporOModel.FK_Ilceler_Iller" ManuallyRouted="false" />
+        <AssociationConnector Association="SporOModel.FK_Mekan_Ilceler" ManuallyRouted="false" />
+        <AssociationConnector Association="SporOModel.Katilanlar" ManuallyRouted="false" />
+        <AssociationConnector Association="SporOModel.KullaniciSpor" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

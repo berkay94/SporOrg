@@ -1,0 +1,716 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SporOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Etkinlik">
+          <Key>
+            <PropertyRef Name="EtkinlikId" />
+          </Key>
+          <Property Name="EtkinlikId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EtkinlikAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipId" Type="int" Nullable="false" />
+          <Property Name="MekanID" Type="int" Nullable="false" />
+          <Property Name="EtkinlikTarihi" Type="datetime" />
+          <Property Name="Kontenjan" Type="int" />
+          <Property Name="isActive" Type="int" Nullable="false" />
+          <Property Name="Sid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EtkinlikTipi">
+          <Key>
+            <PropertyRef Name="TipId" />
+          </Key>
+          <Property Name="TipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tip" Type="nvarchar" MaxLength="50" />
+          <Property Name="Aciklama" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="HataLoglari">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DosyaAdi" Type="nvarchar(max)" />
+          <Property Name="MethodAdi" Type="varchar(max)" />
+          <Property Name="LineNumber" Type="int" />
+          <Property Name="ColumnNumber" Type="int" />
+          <Property Name="Message" Type="varchar(max)" />
+          <Property Name="trh" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ilceler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="255" />
+          <Property Name="Sehir" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Iller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sehir" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Katilanlar">
+          <Key>
+            <PropertyRef Name="Eid" />
+            <PropertyRef Name="Kid" />
+          </Key>
+          <Property Name="Eid" Type="int" Nullable="false" />
+          <Property Name="Kid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="Kid" />
+          </Key>
+          <Property Name="Kid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sifre" Type="char" MaxLength="10" />
+          <Property Name="Ilce" Type="nvarchar" MaxLength="50" />
+          <Property Name="DogumTarihi" Type="datetime" />
+          <Property Name="Cinsiyet" Type="int" />
+          <Property Name="isLogin" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KullaniciSpor">
+          <Key>
+            <PropertyRef Name="Kid" />
+            <PropertyRef Name="Sid" />
+          </Key>
+          <Property Name="Kid" Type="int" Nullable="false" />
+          <Property Name="Sid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mekan">
+          <Key>
+            <PropertyRef Name="Mid" />
+          </Key>
+          <Property Name="Mid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MekanAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="IlceId" Type="int" />
+        </EntityType>
+        <EntityType Name="Sporlar">
+          <Key>
+            <PropertyRef Name="SporId" />
+          </Key>
+          <Property Name="SporId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SporAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="SporcuSayisi" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Etkinlik_EtkinlikTipi">
+          <End Role="EtkinlikTipi" Type="Self.EtkinlikTipi" Multiplicity="1" />
+          <End Role="Etkinlik" Type="Self.Etkinlik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EtkinlikTipi">
+              <PropertyRef Name="TipId" />
+            </Principal>
+            <Dependent Role="Etkinlik">
+              <PropertyRef Name="TipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ilceler_Iller">
+          <End Role="Iller" Type="Self.Iller" Multiplicity="1" />
+          <End Role="Ilceler" Type="Self.Ilceler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iller">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ilceler">
+              <PropertyRef Name="Sehir" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Katilanlar_Etkinlik">
+          <End Role="Etkinlik" Type="Self.Etkinlik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Katilanlar" Type="Self.Katilanlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etkinlik">
+              <PropertyRef Name="EtkinlikId" />
+            </Principal>
+            <Dependent Role="Katilanlar">
+              <PropertyRef Name="Eid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Katilanlar_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Katilanlar" Type="Self.Katilanlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="Kid" />
+            </Principal>
+            <Dependent Role="Katilanlar">
+              <PropertyRef Name="Kid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciSpor_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="KullaniciSpor" Type="Self.KullaniciSpor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="Kid" />
+            </Principal>
+            <Dependent Role="KullaniciSpor">
+              <PropertyRef Name="Kid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciSpor_Sporlar">
+          <End Role="Sporlar" Type="Self.Sporlar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="KullaniciSpor" Type="Self.KullaniciSpor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sporlar">
+              <PropertyRef Name="SporId" />
+            </Principal>
+            <Dependent Role="KullaniciSpor">
+              <PropertyRef Name="Sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mekan_Ilceler">
+          <End Role="Ilceler" Type="Self.Ilceler" Multiplicity="0..1" />
+          <End Role="Mekan" Type="Self.Mekan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ilceler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mekan">
+              <PropertyRef Name="IlceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="EtkinlikAl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="EtkinlikTarihKontrol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="IsLoginUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="kid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="KullaniciSporEkle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="kid" Type="int" Mode="In" />
+          <Parameter Name="sid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SonKullanici" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SporOModelStoreContainer">
+          <EntitySet Name="Etkinlik" EntityType="Self.Etkinlik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EtkinlikTipi" EntityType="Self.EtkinlikTipi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HataLoglari" EntityType="Self.HataLoglari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ilceler" EntityType="Self.Ilceler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Iller" EntityType="Self.Iller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Katilanlar" EntityType="Self.Katilanlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KullaniciSpor" EntityType="Self.KullaniciSpor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mekan" EntityType="Self.Mekan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sporlar" EntityType="Self.Sporlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Etkinlik_EtkinlikTipi" Association="Self.FK_Etkinlik_EtkinlikTipi">
+            <End Role="EtkinlikTipi" EntitySet="EtkinlikTipi" />
+            <End Role="Etkinlik" EntitySet="Etkinlik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ilceler_Iller" Association="Self.FK_Ilceler_Iller">
+            <End Role="Iller" EntitySet="Iller" />
+            <End Role="Ilceler" EntitySet="Ilceler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Katilanlar_Etkinlik" Association="Self.FK_Katilanlar_Etkinlik">
+            <End Role="Etkinlik" EntitySet="Etkinlik" />
+            <End Role="Katilanlar" EntitySet="Katilanlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Katilanlar_Kullanici" Association="Self.FK_Katilanlar_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Katilanlar" EntitySet="Katilanlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciSpor_Kullanici" Association="Self.FK_KullaniciSpor_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="KullaniciSpor" EntitySet="KullaniciSpor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciSpor_Sporlar" Association="Self.FK_KullaniciSpor_Sporlar">
+            <End Role="Sporlar" EntitySet="Sporlar" />
+            <End Role="KullaniciSpor" EntitySet="KullaniciSpor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mekan_Ilceler" Association="Self.FK_Mekan_Ilceler">
+            <End Role="Ilceler" EntitySet="Ilceler" />
+            <End Role="Mekan" EntitySet="Mekan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SporOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Etkinlik">
+          <Key>
+            <PropertyRef Name="EtkinlikId" />
+          </Key>
+          <Property Name="EtkinlikId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EtkinlikAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipId" Type="Int32" Nullable="false" />
+          <Property Name="MekanID" Type="Int32" Nullable="false" />
+          <Property Name="EtkinlikTarihi" Type="DateTime" Precision="3" />
+          <Property Name="Kontenjan" Type="Int32" />
+          <Property Name="isActive" Type="Int32" Nullable="false" />
+          <Property Name="Sid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EtkinlikTipi" Relationship="Self.FK_Etkinlik_EtkinlikTipi" FromRole="Etkinlik" ToRole="EtkinlikTipi" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.Katilanlar" FromRole="Etkinlik" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="EtkinlikTipi">
+          <Key>
+            <PropertyRef Name="TipId" />
+          </Key>
+          <Property Name="TipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Etkinlik" Relationship="Self.FK_Etkinlik_EtkinlikTipi" FromRole="EtkinlikTipi" ToRole="Etkinlik" />
+        </EntityType>
+        <EntityType Name="HataLoglari">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DosyaAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MethodAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LineNumber" Type="Int32" />
+          <Property Name="ColumnNumber" Type="Int32" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="trh" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Ilceler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Ad" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Sehir" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Iller" Relationship="Self.FK_Ilceler_Iller" FromRole="Ilceler" ToRole="Iller" />
+          <NavigationProperty Name="Mekan" Relationship="Self.FK_Mekan_Ilceler" FromRole="Ilceler" ToRole="Mekan" />
+        </EntityType>
+        <EntityType Name="Iller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sehir" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ilceler" Relationship="Self.FK_Ilceler_Iller" FromRole="Iller" ToRole="Ilceler" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="Kid" />
+          </Key>
+          <Property Name="Kid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Ilce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DogumTarihi" Type="DateTime" Precision="3" />
+          <Property Name="Cinsiyet" Type="Int32" />
+          <Property Name="isLogin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Etkinlik" Relationship="Self.Katilanlar" FromRole="Kullanici" ToRole="Etkinlik" />
+          <NavigationProperty Name="Sporlar" Relationship="Self.KullaniciSpor" FromRole="Kullanici" ToRole="Sporlar" />
+        </EntityType>
+        <EntityType Name="Mekan">
+          <Key>
+            <PropertyRef Name="Mid" />
+          </Key>
+          <Property Name="Mid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MekanAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IlceId" Type="Int32" />
+          <NavigationProperty Name="Ilceler" Relationship="Self.FK_Mekan_Ilceler" FromRole="Mekan" ToRole="Ilceler" />
+        </EntityType>
+        <EntityType Name="Sporlar">
+          <Key>
+            <PropertyRef Name="SporId" />
+          </Key>
+          <Property Name="SporId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SporAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SporcuSayisi" Type="Int32" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.KullaniciSpor" FromRole="Sporlar" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Etkinlik_EtkinlikTipi">
+          <End Role="EtkinlikTipi" Type="Self.EtkinlikTipi" Multiplicity="1" />
+          <End Role="Etkinlik" Type="Self.Etkinlik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EtkinlikTipi">
+              <PropertyRef Name="TipId" />
+            </Principal>
+            <Dependent Role="Etkinlik">
+              <PropertyRef Name="TipId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ilceler_Iller">
+          <End Role="Iller" Type="Self.Iller" Multiplicity="1" />
+          <End Role="Ilceler" Type="Self.Ilceler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iller">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ilceler">
+              <PropertyRef Name="Sehir" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mekan_Ilceler">
+          <End Role="Ilceler" Type="Self.Ilceler" Multiplicity="0..1" />
+          <End Role="Mekan" Type="Self.Mekan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ilceler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mekan">
+              <PropertyRef Name="IlceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Katilanlar">
+          <End Role="Etkinlik" Type="Self.Etkinlik" Multiplicity="*" />
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+        </Association>
+        <Association Name="KullaniciSpor">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+          <End Role="Sporlar" Type="Self.Sporlar" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SporOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Etkinlik" EntityType="Self.Etkinlik" />
+          <EntitySet Name="EtkinlikTipi" EntityType="Self.EtkinlikTipi" />
+          <EntitySet Name="HataLoglari" EntityType="Self.HataLoglari" />
+          <EntitySet Name="Ilceler" EntityType="Self.Ilceler" />
+          <EntitySet Name="Iller" EntityType="Self.Iller" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" />
+          <EntitySet Name="Mekan" EntityType="Self.Mekan" />
+          <EntitySet Name="Sporlar" EntityType="Self.Sporlar" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Etkinlik_EtkinlikTipi" Association="Self.FK_Etkinlik_EtkinlikTipi">
+            <End Role="EtkinlikTipi" EntitySet="EtkinlikTipi" />
+            <End Role="Etkinlik" EntitySet="Etkinlik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ilceler_Iller" Association="Self.FK_Ilceler_Iller">
+            <End Role="Iller" EntitySet="Iller" />
+            <End Role="Ilceler" EntitySet="Ilceler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mekan_Ilceler" Association="Self.FK_Mekan_Ilceler">
+            <End Role="Ilceler" EntitySet="Ilceler" />
+            <End Role="Mekan" EntitySet="Mekan" />
+          </AssociationSet>
+          <AssociationSet Name="Katilanlar" Association="Self.Katilanlar">
+            <End Role="Etkinlik" EntitySet="Etkinlik" />
+            <End Role="Kullanici" EntitySet="Kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="KullaniciSpor" Association="Self.KullaniciSpor">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Sporlar" EntitySet="Sporlar" />
+          </AssociationSet>
+          <FunctionImport Name="EtkinlikAl" ReturnType="Collection(SporOModel.EtkinlikAl_Result)" />
+          <FunctionImport Name="EtkinlikTarihKontrol" />
+          <FunctionImport Name="IsLoginUser">
+            <Parameter Name="kid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="KullaniciSporEkle">
+            <Parameter Name="kid" Mode="In" Type="Int32" />
+            <Parameter Name="sid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SonKullanici" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SporOModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SporOModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="EtkinlikAl_Result">
+          <Property Type="Int32" Name="EtkinlikId" Nullable="false" />
+          <Property Type="String" Name="EtkinlikAdi" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SporAdi" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Tip" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="EtkinlikTarihi" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MekanAdi" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ad" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Sehir" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Kontenjan" Nullable="true" />
+          <Property Type="Int32" Name="Katilanlar" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SporOModelStoreContainer" CdmEntityContainer="SporOEntities">
+          <EntitySetMapping Name="Etkinlik">
+            <EntityTypeMapping TypeName="SporOModel.Etkinlik">
+              <MappingFragment StoreEntitySet="Etkinlik">
+                <ScalarProperty Name="EtkinlikId" ColumnName="EtkinlikId" />
+                <ScalarProperty Name="EtkinlikAdi" ColumnName="EtkinlikAdi" />
+                <ScalarProperty Name="TipId" ColumnName="TipId" />
+                <ScalarProperty Name="MekanID" ColumnName="MekanID" />
+                <ScalarProperty Name="EtkinlikTarihi" ColumnName="EtkinlikTarihi" />
+                <ScalarProperty Name="Kontenjan" ColumnName="Kontenjan" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EtkinlikTipi">
+            <EntityTypeMapping TypeName="SporOModel.EtkinlikTipi">
+              <MappingFragment StoreEntitySet="EtkinlikTipi">
+                <ScalarProperty Name="TipId" ColumnName="TipId" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HataLoglari">
+            <EntityTypeMapping TypeName="SporOModel.HataLoglari">
+              <MappingFragment StoreEntitySet="HataLoglari">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DosyaAdi" ColumnName="DosyaAdi" />
+                <ScalarProperty Name="MethodAdi" ColumnName="MethodAdi" />
+                <ScalarProperty Name="LineNumber" ColumnName="LineNumber" />
+                <ScalarProperty Name="ColumnNumber" ColumnName="ColumnNumber" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="trh" ColumnName="trh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ilceler">
+            <EntityTypeMapping TypeName="SporOModel.Ilceler">
+              <MappingFragment StoreEntitySet="Ilceler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Sehir" ColumnName="Sehir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Iller">
+            <EntityTypeMapping TypeName="SporOModel.Iller">
+              <MappingFragment StoreEntitySet="Iller">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Sehir" ColumnName="Sehir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanici">
+            <EntityTypeMapping TypeName="SporOModel.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="Kid" ColumnName="Kid" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Ilce" ColumnName="Ilce" />
+                <ScalarProperty Name="DogumTarihi" ColumnName="DogumTarihi" />
+                <ScalarProperty Name="Cinsiyet" ColumnName="Cinsiyet" />
+                <ScalarProperty Name="isLogin" ColumnName="isLogin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mekan">
+            <EntityTypeMapping TypeName="SporOModel.Mekan">
+              <MappingFragment StoreEntitySet="Mekan">
+                <ScalarProperty Name="Mid" ColumnName="Mid" />
+                <ScalarProperty Name="MekanAdi" ColumnName="MekanAdi" />
+                <ScalarProperty Name="IlceId" ColumnName="IlceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sporlar">
+            <EntityTypeMapping TypeName="SporOModel.Sporlar">
+              <MappingFragment StoreEntitySet="Sporlar">
+                <ScalarProperty Name="SporId" ColumnName="SporId" />
+                <ScalarProperty Name="SporAdi" ColumnName="SporAdi" />
+                <ScalarProperty Name="SporcuSayisi" ColumnName="SporcuSayisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SporOModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Katilanlar" TypeName="SporOModel.Katilanlar" StoreEntitySet="Katilanlar">
+            <EndProperty Name="Etkinlik">
+              <ScalarProperty Name="EtkinlikId" ColumnName="Eid" />
+            </EndProperty>
+            <EndProperty Name="Kullanici">
+              <ScalarProperty Name="Kid" ColumnName="Kid" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="KullaniciSpor" TypeName="SporOModel.KullaniciSpor" StoreEntitySet="KullaniciSpor">
+            <EndProperty Name="Kullanici">
+              <ScalarProperty Name="Kid" ColumnName="Kid" />
+            </EndProperty>
+            <EndProperty Name="Sporlar">
+              <ScalarProperty Name="SporId" ColumnName="Sid" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="EtkinlikAl" FunctionName="SporOModel.Store.EtkinlikAl">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SporOModel.EtkinlikAl_Result">
+                <ScalarProperty Name="EtkinlikId" ColumnName="EtkinlikId" />
+                <ScalarProperty Name="EtkinlikAdi" ColumnName="EtkinlikAdi" />
+                <ScalarProperty Name="SporAdi" ColumnName="SporAdi" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+                <ScalarProperty Name="EtkinlikTarihi" ColumnName="EtkinlikTarihi" />
+                <ScalarProperty Name="MekanAdi" ColumnName="MekanAdi" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Sehir" ColumnName="Sehir" />
+                <ScalarProperty Name="Kontenjan" ColumnName="Kontenjan" />
+                <ScalarProperty Name="Katilanlar" ColumnName="Katilanlar" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EtkinlikTarihKontrol" FunctionName="SporOModel.Store.EtkinlikTarihKontrol" />
+          <FunctionImportMapping FunctionImportName="IsLoginUser" FunctionName="SporOModel.Store.IsLoginUser" />
+          <FunctionImportMapping FunctionImportName="KullaniciSporEkle" FunctionName="SporOModel.Store.KullaniciSporEkle" />
+          <FunctionImportMapping FunctionImportName="SonKullanici" FunctionName="SporOModel.Store.SonKullanici" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SporOModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SporOModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SporOModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SporOModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SporOModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SporOModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SporOModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SporOModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SporOModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
