@@ -13,6 +13,7 @@ namespace SporOrganizasyon.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Kullanici
     {
@@ -27,23 +28,24 @@ namespace SporOrganizasyon.Models
         public string Ad { get; set; }
         public string Soyad { get; set; }
 
-        [DisplayName("Email")]
-        [Required(ErrorMessage = "Email Bos Gecilemez!")]
-        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Gecersiz email")]
+       
         public string Email { get; set; }
 
 
         public string Telefon { get; set; }
 
-        [StringLength(10)]
-        [DisplayName("Sifre")]
-        [Required(ErrorMessage = "Sifre Bos Gecilemez!")]
-        [DataType(DataType.Password)]
+       
+      
         public string Sifre { get; set; }
 
 
         public string Ilce { get; set; }
+
+        [DisplayName("Dogum Tarihi")]
+        [DataType(DataType.Date)]
+        [Column(TypeName = "DateTime2")]
         public Nullable<System.DateTime> DogumTarihi { get; set; }
+
         public Nullable<int> Cinsiyet { get; set; }
         public int isLogin { get; set; }
     

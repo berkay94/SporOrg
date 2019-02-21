@@ -4,39 +4,137 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+    <header>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="leftside">
+                        <h2>Welcome</h2>
+                    </div>
+                    <a class="nav-trigger" href="#0">
+                        <span class="menu-text">Menu</span><span class="menu-icon"></span>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    </header>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <nav>
+        <ul class="primary-nav">
+
+            <li><a href="#0">Etkinlik</a></li>
+            <li><a href="#0">Mekan</a></li>
+            <li><a href="#0">Grup</a></li>
+            <li><a href="#login">Join In</a></li>
+            <li><a href="#register">Create an account</a></li>
+
+            <li>
+                <span>Follow us</span>
+                <ul>
+                    <li class="social">
+                        <a href="#0">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li class="social">
+                        <a href="#0">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li class="social">
+                        <a href="#0">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </li>
+                    <li class="social">
+                        <a href="#0">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+        </ul>
+    </nav>
+
+        <a href="#0" class="round-trigger">
+            <i class="fas fa-sign-in-alt fa-2x clicked"></i>
+            <span class="closed"><i class="fas fa-times fa-2x"></i></span>
+        </a>
+
+        <a href="#0" class="round-trigger-second">
+            <i class="fas fa-registered fa-2x clicked"></i>
+            <span class="closed"><i class="fas fa-times fa-2x"></i></span>
+        </a>
+
+        <section class="round-primary">
+
+            <div class="typing-content">
+                <h3>Test</h3>
+                <form class="flowform jspost" action="index.html" method="post">
+                    <div class="form-question visible">
+                        <label for="q1">What is Your Name and Surname ?</label>
+                        <input type="text" id="q1" name="name" class="form-control toenter" targetbtn="q1btn">
+                        <button type="button" class="btn btn-default flowbutton" id="q1btn">Continue</button>
+                    </div>
+                    <div class="form-question">
+                        <label for="q2">Phone Number:</label>
+                        <input type="tel" id="q2" name="phone" class="form-control toenter" targetbtn="q2btn">
+                        <button type="button" class="btn btn-default flowbutton" id="q2btn">Continue</button>
+                    </div>
+                    <div class="form-question">
+                        <label for="q3">What is your mail adress?</label>
+                        <input type="email" id="q3" name="email" class="form-control toenter" targetbtn="q3btn">
+                        <button type="button" class="btn btn-default flowbutton" id="q3btn">Continue</button>
+                    </div>
+                    <div class="form-question">
+                        <label for="q4">Son?</label>
+                        <input type="text" id="q4" name="last" class="form-control toenter" targetbtn="q4btn">
+                        <button type="submit" class="btn btn-default" id="q4btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+
+        <section class="round-second">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum similique molestias, consequatur labore eum
+                eligendi sed fugit quos fuga optio quidem natus inventore nulla sequi doloribus fugiat repellendus, commodi
+                atque.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora et dolorem fugit corrupti, eum exercitationem suscipit ex ea. Numquam culpa doloribus, aliquid neque cum dignissimos asperiores qui illum obcaecati odio quaerat quam
+                molestias nihil nulla aliquam suscipit modi officia sint eaque saepe sapiente aspernatur dolorum omnis. Quaerat omnis quis odio recusandae sapiente mollitia illum soluta, nam ipsum quibusdam, iste itaque nulla totam modi corporis
+                molestiae obcaecati nesciunt numquam cumque accusantium, expedita? Dicta est, odio reiciendis illo autem blanditiis quia molestiae, animi quisquam illum beatae alias ratione, aut eligendi accusamus quam! Eum assumenda, nisi consequuntur
+                recusandae molestiae iure nobis debitis doloremque.
+            </p>
+        </section>
+
+        <div class="overlay-nav">
+            <span></span>
+        </div>
+
+        <div class="overlay-content">
+            <span></span>
+        </div> <!-- overlay-content for Login -->
+
+        <section class="main">
+            @RenderBody()
+        </section>
+        
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        <script src="~/Scripts/velocity.min.js"></script>
+        <script src="~/Scripts/main.js"></script>
+        @RenderSection("scripts", required: false)
 </body>
 </html>

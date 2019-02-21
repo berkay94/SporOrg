@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,8 +18,8 @@ namespace SporOrganizasyon.Controllers
         // GET: Kullanicis
         public ActionResult Index()
         {
-           
-            return View();
+            var kullanicilar = db.Kullanici.ToList();
+            return View(kullanicilar);
         }
 
         // GET: Kullanicis/Details/5
@@ -48,10 +49,17 @@ namespace SporOrganizasyon.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Kid,Ad,Soyad,Email,Telefon,Sifre,Ilce,DogumTarihi,Cinsiyet,isLogin")] Kullanici kullanici)
+        public ActionResult Create([Bind(Prefix = "Item1")] Kullanici kullanici, int[]sporlar)
         {
             if (ModelState.IsValid)
             {
+                List<Sporlar> Sporlar = new List<Sporlar>();
+                foreach (var item in sporlar)
+                {
+                    var kullanicispor = from spor in db.Sporlar where spor.SporId == item select spor;
+                    Sporlar.Add(kullanicispor.Single());
+                }
+                kullanici.Sporlar = Sporlar;
                 db.Kullanici.Add(kullanici);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -115,6 +123,45 @@ namespace SporOrganizasyon.Controllers
             db.Kullanici.Remove(kullanici);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GirisYap()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GirisYap(Kullanici k)
+        {
+            try
+            {
+
+                var kullanici = db.Kullanici.Single(x => x.Email == k.Email && x.Sifre == k.Sifre);
+                if(kullanici!=null)
+                {
+                    Session["Kid"] = kullanici.Kid.ToString();
+                    Session["Email"] = kullanici.Email.ToString();
+                    return RedirectToAction("AnaSayfa");
+                }
+
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Email veya sifre hatali");
+            }
+            return View();
+        }
+
+        public ActionResult AnaSayfa()
+        {
+            if (Session["Kid"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("GirisYap");
+            }
         }
 
         protected override void Dispose(bool disposing)
